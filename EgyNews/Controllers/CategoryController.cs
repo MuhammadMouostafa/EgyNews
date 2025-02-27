@@ -7,12 +7,7 @@ namespace EgyNews.Controllers
     {
         public IActionResult Index()
         {
-            Category category = new Category();
-            category.Id = 1;
-            category.Name = "Category 1";
-
-
-            return View(category);
+            return View();
         }
         public IActionResult Create()
         {

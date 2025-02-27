@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
-using System.Globalization;
 using EgyNews.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,17 +15,7 @@ namespace EgyNews.Controllers
 
         public IActionResult Index()
         {
-
-            
-            var Numbers = new List<int>() { 1, 2, 3, 4 };
-
-            ViewBag.NumbersList = Numbers;
-            ViewData["NumbersList"] = Numbers;
-            TempData["NumbersList"] = Numbers;
-
-
             return View();
-            //return RedirectToAction("Privacy"); 
         }
 
         public IActionResult Privacy()

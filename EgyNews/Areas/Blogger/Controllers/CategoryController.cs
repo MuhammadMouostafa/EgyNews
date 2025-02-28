@@ -1,5 +1,6 @@
 ﻿using EgyNews.Data;
 using EgyNews.Models;
+using EgyNews.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EgyNews.Areas.Blogger.Controllers
@@ -7,14 +8,14 @@ namespace EgyNews.Areas.Blogger.Controllers
     [Area("Blogger")]
     public class CategoryController : Controller
     {
-        private ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            var categories = _db.Categories.ToList();
+            var categories = _unitOfWork.Categories.GetAll();
             return View(categories);
         }
         public IActionResult Create()
@@ -25,14 +26,14 @@ namespace EgyNews.Areas.Blogger.Controllers
         [HttpPost]
         public IActionResult Create(Category newCategory)
         {
-            _db.Categories.Add(newCategory);
-            _db.SaveChanges();
+            _unitOfWork.Categories.Add(newCategory);
+            _unitOfWork.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Edit(int id)
         {
-            var category = _db.Categories.Find(id);
+            var category = _unitOfWork.Categories.GetById(id);
             if (category == null)
             {
                 return NotFound();
@@ -43,14 +44,14 @@ namespace EgyNews.Areas.Blogger.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
-            _db.Categories.Update(category);
-            _db.SaveChanges();
+            _unitOfWork.Categories.Update(category);
+            _unitOfWork.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Delete(int id)
         {
-            var category = _db.Categories.Find(id);
+            var category = _unitOfWork.Categories.GetById(id);
             if (category == null)
             {
                 return NotFound();
@@ -60,8 +61,8 @@ namespace EgyNews.Areas.Blogger.Controllers
         [HttpPost]
         public IActionResult Delete(Category category)
         {
-            _db.Categories.Remove(category);
-            _db.SaveChanges();
+            _unitOfWork.Categories.Delete(category.Id);
+            _unitOfWork.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
     }

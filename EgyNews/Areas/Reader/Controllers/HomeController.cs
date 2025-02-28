@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EgyNews.Areas.Reader.Controllers
 {
+    [Area("Reader")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

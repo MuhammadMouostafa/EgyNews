@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EgyNews.Areas.Blogger.Controllers
 {
+    [Area("Blogger")]
     public class CategoryController : Controller
     {
         private ApplicationDbContext _db;

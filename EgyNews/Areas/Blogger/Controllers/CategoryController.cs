@@ -2,7 +2,7 @@
 using EgyNews.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EgyNews.Controllers
+namespace EgyNews.Areas.Blogger.Controllers
 {
     public class CategoryController : Controller
     {
@@ -32,7 +32,7 @@ namespace EgyNews.Controllers
         public IActionResult Edit(int id)
         {
             var category = _db.Categories.Find(id);
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }

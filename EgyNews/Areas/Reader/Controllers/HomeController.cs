@@ -2,7 +2,7 @@ using System.Diagnostics;
 using EgyNews.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EgyNews.Controllers
+namespace EgyNews.Areas.Reader.Controllers
 {
     public class HomeController : Controller
     {

@@ -26,9 +26,13 @@ namespace EgyNews.Areas.Blogger.Controllers
         [HttpPost]
         public IActionResult Create(Category newCategory)
         {
-            _unitOfWork.Categories.Add(newCategory);
-            _unitOfWork.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Categories.Add(newCategory);
+                _unitOfWork.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(newCategory);
         }
 
         public IActionResult Edit(int id)
@@ -44,9 +48,13 @@ namespace EgyNews.Areas.Blogger.Controllers
         [HttpPost]
         public IActionResult Edit(Category category)
         {
-            _unitOfWork.Categories.Update(category);
-            _unitOfWork.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Categories.Update(category);
+                _unitOfWork.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
         }
 
         public IActionResult Delete(int id)

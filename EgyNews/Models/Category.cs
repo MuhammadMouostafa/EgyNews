@@ -6,6 +6,8 @@ namespace EgyNews.Models
     {
         [Key] // This attribute indicates that the Id property is the primary key
         public int Id { get; set; } // Its already primary key because its name is Id
+
+        [Required]
         public String Name { get; set; }
     }
 }

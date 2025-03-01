@@ -42,24 +42,27 @@ namespace EgyNews.Areas.Blogger.Controllers
         [HttpPost]
         public IActionResult Upsert(Article article)
         {
-            if (article.Id == 0)
+            if (ModelState.IsValid)
             {
-                _unitOfWork.Articles.Add(article);
+                if (article.Id == 0)
+                {
+                    _unitOfWork.Articles.Add(article);
+                }
+                else
+                {
+                    _unitOfWork.Articles.Update(article);
+                }
+                _unitOfWork.SaveChanges();
+                return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                _unitOfWork.Articles.Update(article);
-            }
-            _unitOfWork.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Article article)
-        {
-            _unitOfWork.Articles.Update(article);
-            _unitOfWork.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            ViewBag.Categories = _unitOfWork.Categories.GetAll()
+                .Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                })
+                .ToList();
+            return View(article);
         }
 
         public IActionResult Delete(int id)

@@ -1,0 +1,32 @@
+﻿@model Article
+
+<h1> @(Model.Id == 0 ? "Create" : "Update") Article </h1>
+
+<form asp-action="Upsert">
+	<div class="form-group">
+		<label asp-for="Title"></label>
+		<input asp-for="Title" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="Content"></label>
+		<textarea asp-for="Content" class="form-control"> </textarea>
+	</div>
+	<div class="form-group">
+		<label asp-for="PublishDate"></label>
+		<input asp-for="PublishDate" type="date" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="CategoryId"></label>
+		<select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+			<option disabled selected>-- Select Category --</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label asp-for="ImageUrl"></label>
+		<input asp-for="ImageUrl" class="form-control" />
+	</div>
+	<div class="form-group">
+		<input type="submit" value="@(Model.Id == 0 ? "Create" : "Save")" class="btn btn-primary" />
+		<a asp-action="Index" class="btn btn-secondary">Back to List</a>
+	</div>
+</form>

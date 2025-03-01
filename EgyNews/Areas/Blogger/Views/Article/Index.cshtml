@@ -1,0 +1,32 @@
+﻿@model List<Article>
+
+<h1> Articles </h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>Title</th>
+			<th>Category</th>
+			<th>Publish Date</th>
+			<th>Actions</th>
+		</tr>
+		<tbody>
+			@foreach (var article in Model)
+			{
+			<tr>
+				<td>@article.Id</td>
+				<td>@article.Title</td>
+				<td>@article.Category.Name</td>
+				<td>@article.PublishDate.ToShortDateString()</td>
+				<td>
+					<a asp-action="Upsert" asp-route-id="@article.Id">Edit</a> |
+					<a asp-action="Delete" asp-route-id="@article.Id">Delete</a>
+				</td>
+			</tr>
+			}
+		</tbody>
+	</thead>
+</table>
+
+<a asp-action="Upsert" class="btn btn-primary"> Craete New Article </a>

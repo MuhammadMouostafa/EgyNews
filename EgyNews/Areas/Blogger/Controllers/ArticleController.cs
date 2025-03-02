@@ -1,6 +1,7 @@
 ﻿using EgyNews.Data;
 using EgyNews.Models;
 using EgyNews.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EgyNews.Areas.Blogger.Controllers
 {
     [Area("Blogger")]
+    [Authorize]
     public class ArticleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

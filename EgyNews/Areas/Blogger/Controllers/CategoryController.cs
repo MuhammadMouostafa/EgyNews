@@ -1,11 +1,13 @@
 ﻿using EgyNews.Data;
 using EgyNews.Models;
 using EgyNews.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EgyNews.Areas.Blogger.Controllers
 {
     [Area("Blogger")]
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

@@ -11,9 +11,11 @@ namespace EgyNews.Areas.Blogger.Controllers
     public class ArticleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ArticleController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ArticleController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -40,10 +42,48 @@ namespace EgyNews.Areas.Blogger.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(Article article)
+        public IActionResult Upsert(Article article, IFormFile? imageFile)
         {
             if (ModelState.IsValid)
             {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (imageFile != null)
+                {
+                    string filename = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    string articlePaht = Path.Combine(wwwRootPath, @"images\article");
+
+                    if (!string.IsNullOrEmpty(article.ImageUrl))
+                    {
+                        var oldImagePath = Path.Combine(wwwRootPath, article.ImageUrl);
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(articlePaht, filename), FileMode.Create))
+                    {
+                        imageFile.CopyTo(fileStream);
+                    }
+
+                    article.ImageUrl = @"\images\article\" + filename;
+                }
+                else
+                {
+                    if (article.Id == 0)
+                    {
+                        ViewBag.Categories = _unitOfWork.Categories.GetAll()
+                        .Select(c => new SelectListItem
+                        {
+                            Value = c.Id.ToString(),
+                            Text = c.Name
+                        })
+                        .ToList();
+                        TempData["Error"] = "Failed to create article without uploading image";
+                        return View(article);
+                    }
+                }
                 if (article.Id == 0)
                 {
                     _unitOfWork.Articles.Add(article);
@@ -66,6 +106,7 @@ namespace EgyNews.Areas.Blogger.Controllers
             TempData["Error"] = article.Id == 0 ? "Failed to create article" : "Failed to update article";
             return View(article);
         }
+
 
         public IActionResult Delete(int id)
         {

@@ -2,7 +2,15 @@
 
 <h1> @(Model.Id == 0 ? "Create" : "Update") Article </h1>
 
-<form asp-action="Upsert">
+<form asp-action="Upsert" enctype="multipart/form-data">
+	@if (!string.IsNullOrEmpty(Model.ImageUrl))
+	{
+		<div class="form-group">
+			<div>
+				<img src="@Model.ImageUrl" alt="Article Image" style="max-width: 100%; height: auto;" />
+			</div>
+		</div>
+	}
 	<div class="form-group">
 		<label asp-for="Title"></label>
 		<input asp-for="Title" class="form-control" />
@@ -26,9 +34,9 @@
 		<span asp-validation-for="CategoryId" class="text-danger"></span>
 	</div>
 	<div class="form-group">
-		<label asp-for="ImageUrl"></label>
-		<input asp-for="ImageUrl" class="form-control" />
-		<span asp-validation-for="ImageUrl" class="text-danger"></span>
+		<label>Upload @(Model.Id == 0 ? "New" : "") Image</label>
+		<input type="file" name="imageFile" class="form-control" />
+		<input type="hidden" asp-for="ImageUrl" />
 	</div>
 	<div asp-validation-summary="All" class="text-danger"></div>
 	<div class="form-group">

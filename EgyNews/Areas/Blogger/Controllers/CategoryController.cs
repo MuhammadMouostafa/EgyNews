@@ -30,8 +30,10 @@ namespace EgyNews.Areas.Blogger.Controllers
             {
                 _unitOfWork.Categories.Add(newCategory);
                 _unitOfWork.SaveChanges();
+                TempData["Success"] = "Category created successfully";
                 return RedirectToAction(nameof(Index));
             }
+            TempData["Error"] = "Failed to create category";
             return View(newCategory);
         }
 
@@ -52,8 +54,10 @@ namespace EgyNews.Areas.Blogger.Controllers
             {
                 _unitOfWork.Categories.Update(category);
                 _unitOfWork.SaveChanges();
+                TempData["Success"] = "Category updated successfully";
                 return RedirectToAction(nameof(Index));
             }
+            TempData["Error"] = "Failed to update category";
             return View(category);
         }
 
@@ -71,6 +75,7 @@ namespace EgyNews.Areas.Blogger.Controllers
         {
             _unitOfWork.Categories.Delete(category.Id);
             _unitOfWork.SaveChanges();
+            TempData["Success"] = "Category deleted successfully";
             return RedirectToAction(nameof(Index));
         }
     }

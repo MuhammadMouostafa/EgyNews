@@ -53,6 +53,7 @@ namespace EgyNews.Areas.Blogger.Controllers
                     _unitOfWork.Articles.Update(article);
                 }
                 _unitOfWork.SaveChanges();
+                TempData["Success"] = article.Id == 0 ? "Article created successfully" : "Article updated successfully";
                 return RedirectToAction(nameof(Index));
             }
             ViewBag.Categories = _unitOfWork.Categories.GetAll()
@@ -62,6 +63,7 @@ namespace EgyNews.Areas.Blogger.Controllers
                     Text = c.Name
                 })
                 .ToList();
+            TempData["Error"] = article.Id == 0 ? "Failed to create article" : "Failed to update article";
             return View(article);
         }
 
@@ -83,6 +85,7 @@ namespace EgyNews.Areas.Blogger.Controllers
         {
             _unitOfWork.Articles.Delete(article.Id);
             _unitOfWork.SaveChanges();
+            TempData["Success"] = "Article deleted successfully";
             return RedirectToAction(nameof(Index));
         }
     }

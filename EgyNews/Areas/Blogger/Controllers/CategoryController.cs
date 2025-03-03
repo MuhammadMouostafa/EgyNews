@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EgyNews.Areas.Blogger.Controllers
 {
     [Area("Blogger")]
-    [Authorize]
+    [Authorize(Roles = "Blogger,Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

@@ -1,4 +1,5 @@
 ﻿using EgyNews.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,12 @@ namespace EgyNews.Data
                 new Category { Id = 4, Name = "Health And Science" },
                 new Category { Id = 5, Name = "Sports" },
                 new Category { Id = 6, Name = "Entertainment" }
+            );
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Name = "Blogger", NormalizedName = "BLOGGER" },
+                new IdentityRole { Name = "Reader", NormalizedName = "READER" }
             );
 
             // Seed initial data for Articles

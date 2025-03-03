@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EgyNews.Areas.Blogger.Controllers
 {
     [Area("Blogger")]
-    [Authorize]
+    [Authorize(Roles = "Blogger,Admin")]
     public class ArticleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

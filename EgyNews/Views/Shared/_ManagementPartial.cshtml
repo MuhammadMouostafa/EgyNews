@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    if (user != null)
+    {
+        var roles = await UserManager.GetRolesAsync(user);
+        if (roles.Contains("Admin") || roles.Contains("Blogger"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Blogger" asp-controller="Category" asp-action="Index">Categories</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Blogger" asp-controller="Article" asp-action="Index">Articles</a>
+            </li>
+        }
+        if (roles.Contains("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Users">Users</a>
+            </li>
+        }
+    }
+}

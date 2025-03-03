@@ -23,15 +23,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Reader" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Blogger" asp-controller="Category" asp-action="Index">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Blogger" asp-controller="Article" asp-action="Index">Articles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Admin" asp-action="Users">Users</a>
-                        </li>
+                        <partial name="_ManagementPartial" />
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

@@ -1,0 +1,15 @@
+﻿@model Article
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">@Model.Title</h1>
+    <img src="@Model.ImageUrl" class="img-fluid mb-4" alt="Article Image">
+    <p>@Model.Content</p>
+    <small class="text-muted">Published on: @Model.PublishDate.ToShortDateString()</small>
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to Categories</a>
+    </div>
+</div>

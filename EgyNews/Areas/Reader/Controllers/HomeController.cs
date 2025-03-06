@@ -2,6 +2,7 @@ using System.Diagnostics;
 using EgyNews.Models;
 using EgyNews.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EgyNews.Areas.Reader.Controllers
 {
@@ -36,6 +37,18 @@ namespace EgyNews.Areas.Reader.Controllers
 
             ViewBag.CategoryName = category.Name;
             return PartialView("_ArticlesCard", articles);
+        }
+
+        public IActionResult ArticleDetails(int id)
+        {
+            var article = _unitOfWork.Articles.GetById(id);
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            return View(article);
         }
 
         public IActionResult Privacy()

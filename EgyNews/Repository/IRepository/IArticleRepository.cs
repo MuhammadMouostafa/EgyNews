@@ -6,6 +6,8 @@ namespace EgyNews.Repository.IRepository
     public interface IArticleRepository
     {
         IEnumerable<Article> GetAll();
+        public IEnumerable<Article> GetAllByCategory(int categoryId);
+
         Article GetById(int id);
 
         Article Get(Expression<Func<Article, bool>> filter, string? includeProperties = null);

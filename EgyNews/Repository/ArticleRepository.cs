@@ -19,6 +19,12 @@ namespace EgyNews.Repository
             return _db.Articles.Include(a => a.Category).ToList();
         }
 
+        public IEnumerable<Article> GetAllByCategory(int categoryId)
+        {
+            return _db.Articles.Include(a => a.Category)
+                .Where(a => a.CategoryId == categoryId).ToList();
+        }
+
         public Article GetById(int id)
         {
             return _db.Articles.Include(a => a.Category)
